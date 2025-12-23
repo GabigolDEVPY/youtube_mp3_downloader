@@ -8,3 +8,5 @@ ffmpeg-8.0.1-essentials_build
 .env
 env
 db.sqlite3
+media
+.media

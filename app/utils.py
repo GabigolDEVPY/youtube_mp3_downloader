@@ -8,6 +8,9 @@ import re
 media_path = os.path.join(settings.BASE_DIR, 'media')
 os.makedirs(media_path, exist_ok=True)
 
+class VideoNotFoundError(Exception):
+    pass
+
 def sanitize_filename(name):
     return re.sub(r'[<>:"/\\|?*]', '', name)
 
@@ -24,7 +27,7 @@ class Yt:
         
         self.download_opts = {
                     'format': 'bestaudio/best',
-                    'ffmpeg_location': r'F:\WINDOWS\PROGRAMACAO_TUDO\Youtube_music_downloader\ffmpeg-8.0.1-essentials_build\bin',
+                    'ffmpeg_location': os.path.join(settings.BASE_DIR, "ffmpeg-8.0.1-essentials_build", "bin"),
                     'noplaylist': True,
                     "outtmpl": os.path.join(media_path, f"{clean_title}.%(ext)s"),
                     'postprocessors': [{
@@ -34,10 +37,13 @@ class Yt:
                     }],
                     'cookiefile': 'cookies.txt',
                 }
-        self.get_info()
+        
     def get_info(self):
         with yt_dlp.YoutubeDL(self.info_opts) as ydl:
-            info = ydl.extract_info(self.url, download=False)
+            try:
+                info = ydl.extract_info(self.url, download=False)
+            except Exception:
+                raise VideoNotFoundError("Não foi possível localizar musica com essa URL")
         
         return {
         "title": sanitize_filename(info.get("title")),
