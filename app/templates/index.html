@@ -1,20 +1,8 @@
-{% if messages %}
-    {% for message in messages %}
-        <script>alert("{{ message }}")</script>
-    {% endfor %}
-{% endif %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
     <form action="{% url 'app:detail' %}" method="get">
         {% csrf_token %}
         <input type="text" name="url" id="" required>
         <button>Search</button>
     </form>
-</body>
-</html>
+{% endblock content %}
