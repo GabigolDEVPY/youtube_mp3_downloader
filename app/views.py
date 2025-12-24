@@ -16,6 +16,8 @@ class DetailMusic(TemplateView):
     
     def get(self, request, *args, **kwargs):
         url = self.request.GET.get("url")
+        context = {"music": "musica"}
+        return self.render_to_response(context)
         if not url:
             messages.error("URL não informada")
             return redirect("app:index")

@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="{% url 'app:detail' %}" method="get">
-        {% csrf_token %}
-        <input type="text" name="url" id="" required>
-        <button>Search</button>
-    </form>
+
+    <div class="content d-flex flex-column gap-3 align-items-center mt-5">
+        <h4>Youtube Music Download</h4>
+        <h6 class="opacity-50">Free Download</h6>
+        <form action="{% url 'app:detail' %}" method="get">
+            {% csrf_token %}
+            <div class="d-flex gap-1">
+                <input class="form-control" type="text" name="url" placeholder="url..." id="" required>
+                <button class="btn btn bg-danger text-light">Search</button>
+            </div>
+        </form>
+    </div>
+
+
 {% endblock content %}
